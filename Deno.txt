@@ -1,0 +1,148 @@
+Official Doc: https://deno.land/
+
+Deno Setup:
+To install Deno:
+open windows powershell: and run
+iwr https://deno.land/x/install/install.ps1 -useb | iex
+
+once it is installed, it will give the same REPL playground as we had for node using 'deno'
+once we type 'deno', we get playground, we can run aything like 1 + 1, get results
+and quit the playground using CTRL + D or close()
+
+--------------------------------------------------------------------------------------------------
+
+Writing First Deno Code:
+
+Files can be executed when using deno: we use run command also with deno
+deno run app.ts / deno run app.js
+and not like we used to do in node like:
+node app.js
+
+---------------------------------------------------------------------------------------------
+
+Node Docs link: https://nodejs.org/dist/latest-v17.x/docs/api/
+Deno Docs Link: https://doc.deno.land/builtin/stable
+
+We have almost all core APIs common in Node and Deno
+Both does not have APIs that we can run only in browser that interacts with DOM since both does not have any DOM as both are not running in browser
+But deno has some APIs like 'fetch' that we do not have in Node as Deno has a core philosophy of as browser compatible as possible
+
+So in a nutshell, it is about 
+features that we can do in a browser (like fetch operations that deno support but node does not) - 
+features that makes sense only in browser (like interacting with DOM, that Deno and Node both do not support)  +
+features that cant be used inside of the browser, that is done outside of browser only (like read/write file operations that Deno and Node both support)
+
+-----------------------------------------------------------------------------------------------------------------
+
+Using the Runtime API
+
+Now, when we write 'Deno' in our Visual Studio IDE, it does not understand it and does not show methods/features available in Deno
+For that, we can install DEno Extension in our VD IDE by going to view (in VS)-> Extensions -> search for Deno and install
+
+When we run our example, it shows 'Permission Denied' error which is a feature of Deno
+when reading or writing file or sending or listening to network request, http request, such operations are denied by default
+as part of deno security which was allowed by default in node
+
+to allow write operation, we have different flags that we need to use when run the application
+so instead of 'deno run app.ts', we will have to give write permission like this
+'deno run --allow-write app.ts'
+we can narrow it down by mentioning the filename also lile to which specific file access is allowed
+'deno run --allow-write=message.txt app.ts'
+can also define multiple files like eg
+'deno run --allow-write=message.txt,test.txt app.ts'
+
+have different different flags for all permissions like for read
+deno run --allow-read app.ts
+
+---------------------------------------------------------------------------------------------------------------
+
+different between deno and node
+1- we can use promises in node by importing promises, deno by default allows promises
+2- text passed in deno should be utiencoded, while in node can be in plain string
+3 - can run deno file using 'deno run <filename>', can run node file using 'node <filename>'
+4 - deno can directly run ts file also while node can directly run js file only and will have to convert ts to js file to run in node
+5 - deno requires permissions to write/read/network request like operations while node does not require such permissions
+6 - to give permission, need to run like 'deno run --allow-write app.ts'
+
+--------------------------------------------------------------------------------------------------------------------
+
+Deno Landing page from where we can get access to namespace APIs, standard Libraries and third party Libraries
+https://deno.land/
+
+Deno NameSpace APIs: https://doc.deno.land/builtin/stable
+Standard Library: https://deno.land/std@0.116.0
+Third Party Libraries: https://deno.land/x
+
+-----------------------------------------------------------------------------------------------------------------
+
+one core difference that we see between node and deno is
+while importing, in node we can not import from any external url, we need to have the functionality to be downloaded in the module
+to use it
+while deno supoorts importing from any url from server and hence need not to download the feature in project Setup locally
+
+creating a server with Deno- https://deno.land/std@0.116.0/http
+To run would need a net permission: deno run --allow-net app.ts
+
+This uses async iterables which is a feature of javascript
+
+---------------------------------------------------------------------------------------------------------------------
+
+With Deno also, we can built both types of apps that we saw in node js
+that is server rendered views or APIs
+
+With Node, we have 'Express' framework
+similarly, with Deno, we have 'Oak' framework
+
+One more core difference is.. with Node, we have package.json file, node modules file
+while with Deno, we have no such concepts since we have url like imports so we dont need to manage anything locally
+
+Now to use Oak, we can get the same from deno third party modules section
+There search for Oak Library: https://deno.land/x/oak@v10.0.0
+
+-----------------------------------------------------------------------------------------------------------------------
+
+More on Module URLs
+When it comes to Deno imports, we use ES Modules with URLs that point at the files you want to import.
+
+These can be local files (import something from './my_file.ts';) but these can also be remote files
+ (import { serve } from 'https://deno.land/std/http/server.ts';).
+
+Here are a couple of useful bits of information on those remote imports:
+
+To get better auto-completion in the IDE, execute your code once and let Deno download + cache those remote files locally. 
+Thereafter, you should get better autocompletion
+
+If you ever want to force Deno to re-fetch the remote files (i.e. to clear the local cache), 
+you can do so by executing your script with the --reload flag (e.g. deno run --reload my_file.ts)
+
+If you want to lock in a certain version for a remote file, you can do so: 
+import { serve } from 'https://deno.land/std@0.51.0/http/server.ts';
+
+----------------------------------------------------------------------------------------------------------------------------
+
+REST API example in NOde and Deno
+
+-will create a separate folder for both
+
+- in node, will create package.json file and install express and body parser
+- for that, will go to 'cd node' folder and run 'npm init' and 'npm install --save express body-parser'
+- and now to run : 'node app.js' (if already under node folder) else 'cd node' and then 'node app.js'
+
+-for deno, will go to deno folder with 'cd deno' or come out of node folder using 'cd..'
+- and run using 'deno run --allow-net app.ts'
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
